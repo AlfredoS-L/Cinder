@@ -12,28 +12,28 @@ struct SwipeActionIndicatorView: View {
     
     var body: some View {
         HStack {
-            Text("MATCH")
+            Text("YES")
                 .font(.title)
                 .fontWeight(.heavy)
                 .foregroundStyle(.green)
                 .overlay {
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(.green, lineWidth: 2)
-                        .frame(width: 120, height: 45)
+                        .frame(width: 90, height: 45)
                 }
                 .rotationEffect(.degrees(-45))
                 .opacity(Double(xOffset / SizeConstants.screenCutOff))
             
             Spacer()
             
-            Text("NOPE")
+            Text("NO")
                 .font(.title)
                 .fontWeight(.heavy)
                 .foregroundStyle(.red)
                 .overlay {
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(.red, lineWidth: 2)
-                        .frame(width: 120, height: 45)
+                        .frame(width: 90, height: 45)
                 }
                 .rotationEffect(.degrees(45))
                 .opacity(Double(xOffset / SizeConstants.screenCutOff) * -1)

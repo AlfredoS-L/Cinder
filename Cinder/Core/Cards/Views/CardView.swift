@@ -10,15 +10,27 @@ import SwiftUI
 struct CardView: View {
     @State private var xOffset: CGFloat = 0
     @State private var degrees: Double = 0
-    // REMOVE if causing issues
-    @State private var yOffset: CGFloat = 0
+    @State private var yOffset: CGFloat = 0 // DEL if
+    @State private var currentImageIndex = 0
+    @State private var mockImages = [
+        "partyCat",
+        "stryCat",
+        "paoBP"
+    ]
     
     var body: some View {
         ZStack(alignment: .bottom) {
             ZStack(alignment: .top) {
-                Image(.stryCat)
+                Image(mockImages[currentImageIndex])
                     .resizable()
                     .scaledToFill()
+                    .overlay {
+                        ImageScrollingOverlay(currentImageIndex: $currentImageIndex,
+                                              imageCount: mockImages.count)
+                    }
+                
+                CardImageIndicatorView(currentImageIndex: currentImageIndex,
+                                       imageCount: mockImages.count)
                 
                 SwipeActionIndicatorView(xOffset: $xOffset)
                     .padding(.leading, 85)
@@ -46,6 +58,24 @@ struct CardView: View {
 }
 
 private extension CardView {
+    func returnToCenter() {
+        xOffset = 0
+        degrees = 0
+        yOffset = 0
+    }
+    
+    func swipeRight() {
+        xOffset = 500
+        degrees = 12
+    }
+    
+    func swipeLeft() {
+        xOffset = -500
+        degrees = -12
+    }
+}
+
+private extension CardView {
     func onDragChanged(_ value: _ChangedGesture<DragGesture>.Value){
         xOffset = value.translation.width
         yOffset = value.translation.height / 15
@@ -56,8 +86,14 @@ private extension CardView {
         let width = value.translation.width
         
         if abs(width) <= abs(SizeConstants.screenCutOff) {
-            xOffset = 0
-            degrees = 0
+            returnToCenter()
+            return
+        }
+        
+        if width >= SizeConstants.screenCutOff {
+            swipeRight()
+        } else {
+            swipeLeft()
         }
     }
 }
