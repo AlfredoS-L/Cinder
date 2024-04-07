@@ -11,7 +11,7 @@ import SwiftUI
 struct CinderApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CardStackView()
         }
     }
 }
