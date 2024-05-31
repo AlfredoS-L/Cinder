@@ -10,8 +10,8 @@ import SwiftUI
 struct MainTabView: View {
     var body: some View {
         TabView {
-            Text("Swiping View")
-                .tabItem { 
+            CardStackView()
+                .tabItem {
                     Image(systemName: "flame")
                 }
                 .tag(0)
